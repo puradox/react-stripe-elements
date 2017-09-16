@@ -18,6 +18,20 @@ type Props = {
 
 const noop = () => {};
 
+<<<<<<< HEAD
+const _extractOptions = (props: Props): Object => {
+  const {
+    className,
+    elementRef,
+    onChange,
+    onFocus,
+    onBlur,
+    onReady,
+    ...options
+  } = props;
+  return options;
+};
+
 class Element extends React.Component<Props> {
   static propTypes = {
     className: PropTypes.string,
@@ -46,7 +60,7 @@ class Element extends React.Component<Props> {
   constructor(props: Props, context: ElementContext) {
     super(props, context);
 
-    const options = this._extractOptions(this.props);
+    const options = _extractOptions(this.props);
     this._element = this.context.elements.create(this.props.type, options);
     this._setupEventListeners();
     this._options = options;
@@ -59,7 +73,7 @@ class Element extends React.Component<Props> {
     }
   }
   componentWillReceiveProps(nextProps: Props) {
-    const options = this._extractOptions(nextProps);
+    const options = _extractOptions(nextProps);
     if (
       Object.keys(options).length !== 0 &&
       !shallowEqual(options, this._options)
@@ -92,19 +106,6 @@ class Element extends React.Component<Props> {
     this._element.on('change', change => onChange(change));
     this._element.on('blur', (...args) => onBlur(...args));
     this._element.on('focus', (...args) => onFocus(...args));
-  }
-
-  _extractOptions(props: Props): Object {
-    const {
-      className,
-      elementRef,
-      onChange,
-      onFocus,
-      onBlur,
-      onReady,
-      ...options
-    } = props;
-    return options;
   }
 
   handleRef = (ref: ?React.Ref<any>) => {
